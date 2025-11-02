@@ -1,1 +1,3 @@
-from . import boxplot, growl
+import matplotlib.pyplot as plt
+
+from . import plot, utils
