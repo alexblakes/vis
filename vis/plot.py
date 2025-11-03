@@ -8,7 +8,8 @@ def boxplot(
     colors,
     ax=None,
     label_n=True,
-    min_n=5,
+    min_n_box=5,
+    min_n_alpha=25,
     scatter_kwargs=None,
     boxplot_kwargs=None,
 ):
@@ -31,7 +32,14 @@ def boxplot(
     boxplot_kwargs.setdefault("medianprops", dict(color="black"))
     boxplot_kwargs.setdefault(
         "meanprops",
-        dict(color="black", marker="o", mew=1, markeredgecolor="black", markerfacecolor="white", markersize=3),
+        dict(
+            color="black",
+            marker="o",
+            mew=1,
+            markeredgecolor="black",
+            markerfacecolor="white",
+            markersize=3,
+        ),
     )
 
     for (i, (group, data)), color in zip(enumerate(dfg), colors):
@@ -44,9 +52,24 @@ def boxplot(
         if label_n:
             label += f"\n(N={n})"
 
+        if n < min_n_alpha:
+            scatter_kwargs.update(alpha=1)
+
         ax.scatter(x, y, color=color, **scatter_kwargs)
 
-        if n >= min_n:
+        if n < min_n_box:
+            # Plot an empty boxplot
+            ax.boxplot(
+                y,
+                positions=[i],
+                labels=[label],
+                showbox=False,
+                showcaps=False,
+                showmeans=False,
+                whiskerprops=dict(linestyle="None"),
+                medianprops=dict(linestyle="None"),
+            )
+        else:
             ax.boxplot(y, positions=[i], labels=[label], **boxplot_kwargs)
 
     return ax

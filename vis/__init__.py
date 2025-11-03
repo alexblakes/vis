@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
 
-from . import plot, utils
+from . import plot, utils, color
 
-plt.style.use("vis.styles.default")
+plt.style.use("vis.style.default")
