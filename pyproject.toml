@@ -17,5 +17,8 @@ dynamic = ["readme"]
 [tool.setuptools.dynamic]
 readme = {file = ["README.md"], content-type = "text/markdown"}
 
+[tool.setuptools.packages.find]
+where = ["vis"]
+
 [tool.setuptools.package-data]
-vis.style = ["*.mplstyle"]
+style = ["*.mplstyle"]
