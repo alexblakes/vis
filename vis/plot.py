@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
 
 def boxplot(
@@ -71,5 +72,60 @@ def boxplot(
             )
         else:
             ax.boxplot(y, positions=[i], labels=[label], **boxplot_kwargs)
+
+    return ax
+
+
+def grouped_vertical_bar(
+    df,
+    cluster_column,
+    bar_column,
+    data_column,
+    err_columns=None,
+    bar_label_fmt=None,
+    colors=None,
+    ax=None,
+    *args,
+    **kwargs,
+):
+    ax = ax or plt.gca()
+
+    dfg = df.groupby(bar_column, sort=False)
+    n_clusters = len(dfg)
+
+    if colors is None:
+        colors = [[]] * n_clusters
+
+    for (i, (name, data)), color in zip(enumerate(dfg), colors):
+        n_bars = len(data)
+        labels = data[cluster_column]
+        y = data[data_column]
+        left_bar_positions = np.arange(n_bars)
+        bar_width = 1 / (n_clusters + 1)
+        offset = bar_width * i
+        bar_positions = (left_bar_positions + offset) - (bar_width / 2)
+
+        err_values = None
+        if err_columns:
+            err_values = data[err_columns].values.transpose()
+            print(err_values)
+
+        if color:
+            kwargs.update(color=color)
+
+        bars = ax.bar(
+            bar_positions,
+            height=y,
+            width=bar_width,
+            label=name,
+            yerr=err_values,
+            *args,
+            **kwargs,
+        )
+        if not bar_label_fmt is None:
+            ax.bar_label(bars, fmt=bar_label_fmt)
+
+    tick_positions = left_bar_positions + (bar_width * (n_clusters - 2) / 2) #- (bar_width/2)
+    ax.set_xticks(tick_positions, labels=labels)
 
     return ax
