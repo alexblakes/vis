@@ -21,7 +21,8 @@ def rotate_tick_labels(axis, ax=None, **kwargs):
 
 def configure_annotator(annot, *args, **kwargs):
     kwargs.setdefault("show_test_name", False)
-    kwargs.setdefault("text_format", "full")
+    kwargs.setdefault("text_format", "simple") # Use "full" for exact P values smaller than the threshold
+    kwargs.setdefault("pvalue_thresholds", [[1e-16, "1e-16"]])
     kwargs.setdefault("pvalue_format_string", "{:.3g}")
     kwargs.setdefault("p_capitalized", True)
     kwargs.setdefault("p_separators", ("",""))
