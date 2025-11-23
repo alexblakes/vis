@@ -22,7 +22,7 @@ def rotate_tick_labels(axis, ax=None, **kwargs):
 def configure_annotator(annot, *args, **kwargs):
     kwargs.setdefault("show_test_name", False)
     kwargs.setdefault("text_format", "full")
-    kwargs.setdefault("pvalue_format_string", "{:.3f}")
+    kwargs.setdefault("pvalue_format_string", "{:.3g}")
     kwargs.setdefault("p_capitalized", True)
     kwargs.setdefault("p_separators", ("",""))
     kwargs.setdefault("loc", "outside")
