@@ -47,7 +47,7 @@ legend.borderpad : 0
 legend.labelspacing : 0.2
 legend.handlelength : 1
 legend.handletextpad : 0.5
-legend.labelcolor: linecolor
+legend.labelcolor: markeredgecolor # linecolor, markerfacecolor
 
 # Always save as 'tight'
 savefig.bbox : tight
